@@ -3,18 +3,26 @@
 use Livewire\Volt\Component;
 
 new class extends Component {
-    #[Validate('required|string|max:255')]
-    public string $message = ''; 
+    public string $message = '';
+
+    public function rules(): array
+    {
+        return [
+            'message' => 'required|string|max:255',
+        ];
+    }
 
     public function store(): void
     {
-        $validated = $this->validate();
- 
+        $validated = $this->validate(); // Sekarang validasi bisa berjalan
+
         auth()->user()->chirps()->create($validated);
- 
+
         $this->message = '';
-    } 
-}; ?>
+    }
+};
+?>
+
 
 <div>
     <form wire:submit="store"> 
